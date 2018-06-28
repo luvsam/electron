@@ -3,6 +3,7 @@ import("//tools/grit/repack.gni")
 import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 import("build/asar.gni")
 import("build/npm.gni")
+import("//pdf/features.gni")
 
 if (is_mac) {
   import("//build/config/mac/rules.gni")
@@ -237,6 +238,12 @@ static_library("electron_lib") {
     "brightray",
     "build/node",
   ]
+  if (enable_desktop_capturer) {
+    deps += [ "//third_party/webrtc/modules/desktop_capture" ]
+  }
+  if (enable_pdf) {
+    deps += [ "//pdf" ]
+  }
   if (is_mac) {
     deps += [
       "//ui/accelerated_widget_mac",
@@ -376,6 +383,9 @@ static_library("electron_lib") {
   if (is_linux) {
     sources += filenames_gypi.lib_sources_linux
     sources += filenames_gypi.lib_sources_nss
+  }
+  if (is_win) {
+    sources += filenames_gypi.lib_sources_win
   }
 }
 
