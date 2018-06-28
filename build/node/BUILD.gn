@@ -82,7 +82,7 @@ action("build_node") {
     outputs = [ "$target_out_dir/$configuration/lib/libnode.so" ]
   }
   if (is_win) {
-    outputs = [ "$target_out_dir/$configuration/node.dll.lib" ]
+    outputs = [ "$target_out_dir/$configuration/node.dll.lib", "$target_out_dir/$configuration/node.dll" ]
   }
 }
 
@@ -100,7 +100,7 @@ config("node_config") {
     "//third_party/electron_node/deps/uv/include",
     "//third_party/electron_node/deps/cares/include",
   ]
-  libs = node_libs
+  libs = [ node_libs[0] ]
   cflags_cc = [
     "-Wno-deprecated-declarations",
   ]
